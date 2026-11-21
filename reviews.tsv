@@ -1,0 +1,94 @@
+# action	relation	left (simplified)	right (simplified)	reverse sense
+# The screenshot headwords, reviewed against Hu, twngrams and the Taiwan MOE entry for 釐清.
+prefer	VO	做	作业	homework
+prefer	VO	写	作业	homework
+prefer	VO	交	作业	homework
+prefer	VO	改	作业	homework
+keep	VO	完成	作业	homework
+keep	VO	批改	作业	homework
+keep	VO	布置	作业	homework
+keep	VO	留	作业	homework
+keep	VO	评改	作业	homework
+group	VO	进行	作业	operations
+group	VO	执行	作业	operations
+group	VO	开展	作业	operations
+group	VO	实施	作业	operations
+group	VO	中止	作业	operations
+group	VO	恢复	作业	operations
+group	VO	停止	作业	operations
+group	VO	暂停	作业	operations
+group	VO	延误	作业	operations
+group	VO	终止	作业	operations
+group	VO	继续	作业	operations
+group	VO	开始	作业	operations
+block	VO	提名	作业
+block	VO	拆除	作业
+block	VO	拍摄	作业
+block	VO	烤漆	作业
+block	VO	除雪	作业
+block	VO	登陆	作业
+keep	VO	厘清	案情
+keep	VO	厘清	问题
+keep	VO	厘清	责任
+prefer	VO	厘清	事实
+prefer	VO	厘清	定义
+prefer	VO	厘清	概念
+keep	VO	厘清	字义
+keep	VO	厘清	头绪
+keep	VO	厘清	界限
+keep	VO	厘清	关系
+keep	VO	厘清	真相
+keep	VO	理清	思路
+keep	VO	理清	头绪
+keep	VO	理清	脉络
+keep	VO	理清	关系
+prefer	VO	澄清	事实
+prefer	VO	澄清	传闻
+keep	VO	澄清	谣言
+keep	VO	澄清	误会
+keep	VO	澄清	立场
+block	VO	澄清	湖
+block	VO	澄清	路
+block	VO	澄清	闸
+block	VO	澄清	球场
+block	VO	澄清	医院
+# Relation corrections identified in the popup audit.
+block	VO	理解	能力
+block	VO	理解	程度
+block	VO	感觉	神经
+block	VO	感觉	器官
+block	VO	说明	会
+block	VO	说明	文件
+block	VO	执行	董事
+block	VO	执行	委员
+block	VO	实施	情况
+block	VO	解决	办法
+block	VO	解决	方案
+block	VO	解决	方法
+block	VO	解决	方式
+block	VO	工作	时间
+block	VO	影响	因素
+block	VO	建议	售价
+block	VO	投资	风险
+block	VO	变化	衣服
+block	VO	变化	动词
+block	VO	澄清	了
+block	SP	澄清	表示
+block	PC	澄清	为
+block	SP	高雄	澄清
+block	SP	认识	不同
+block	AP	健康	促进
+block	AP	新	发现
+block	AN	明确	地
+block	AN	随着	电脑
+keep	AN	理解	能力
+keep	AN	理解	程度
+keep	AN	说明	会
+keep	AN	说明	文件
+keep	AN	执行	董事
+keep	AN	执行	委员
+keep	AN	解决	方案
+keep	AN	解决	办法
+keep	AN	工作	时间
+keep	AN	影响	因素
+keep	AN	投资	风险

@@ -1,0 +1,55 @@
+name: Build and publish dictionary
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: New numeric revision (for example 1.2.0)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dictionary-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    timeout-minutes: 35
+    env:
+      MANDARIN_COLLOCATIONS_REVISION: ${{ inputs.revision }}
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.13'
+      - name: Check revision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $revision = $env:MANDARIN_COLLOCATIONS_REVISION
+          if ($revision -cnotmatch '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$') { throw 'Use three numeric components' }
+          $latest = gh release view --repo $env:GITHUB_REPOSITORY --json tagName --jq '.tagName'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if ([version]$revision -le [version]($latest.TrimStart('v'))) { throw "Revision must be newer than $latest" }
+      - name: Build and validate
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          .\scripts\fetch-inputs.ps1
+          python -m pip install -r .\scripts\requirements.txt
+          python .\scripts\extract-speech.py
+          cargo run --release --locked
+          python .\scripts\validate.py
+      - name: Publish matching index and dictionary
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $revision = $env:MANDARIN_COLLOCATIONS_REVISION
+          gh release create "v$revision" .\dist\mandarin-collocations.zip .\dist\index.json --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title "Mandarin Collocations $revision" --generate-notes --latest
