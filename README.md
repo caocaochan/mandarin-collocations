@@ -2,7 +2,7 @@
 
 Bidirectional Yomitan dictionary for modern Mandarin. Import the [latest dictionary ZIP](https://github.com/caocaochan/mandarin-collocations/releases/latest/download/mandarin-collocations.zip) under **Settings → Dictionaries → Import**. Searching a verb shows objects it takes, and searching a noun shows verbs and modifiers that go with it.
 
-Traditional and Simplified lookup forms return the same entry set, including where several Traditional forms share a Simplified spelling. Each entry shows its Traditional collocations and offers a Simplified disclosure when the text differs. A shared spelling can therefore return entries associated with more than one sense or reading.
+Traditional and Simplified lookup forms return the same entry set, including where several Traditional forms share a Simplified spelling. Each entry displays its collocations in Traditional Chinese. A shared spelling can return entries associated with more than one sense or reading.
 
 The release ZIP includes update metadata. Yomitan checks for a higher numeric revision at the [latest release index](https://github.com/caocaochan/mandarin-collocations/releases/latest/download/index.json). If you imported the original local 1.0.0 build, replace it once with the release ZIP to enable future updates.
 

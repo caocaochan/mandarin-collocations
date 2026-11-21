@@ -146,14 +146,7 @@ fn render(
     )];
     let mut ordered: Vec<_> = groups.iter().collect();
     ordered.sort_by_key(|(group, _)| (group.relation, group.reverse, sense_order(group.sense)));
-    body.extend(render_groups(traditional, true, &ordered, forms, lexicon));
-    let simplified = render_groups(headword, false, &ordered, forms, lexicon);
-    if simplified.as_slice() != &body[1..] {
-        let mut alternative =
-            vec![json!({"tag": "summary", "content": "简体搭配", "lang": "zh-Hans"})];
-        alternative.extend(simplified);
-        body.push(node("details", json!(alternative), "examples"));
-    }
+    body.extend(render_groups(traditional, &ordered, forms, lexicon));
     json!({"type": "structured-content", "content": {
         "tag": "div", "data": {"content": "hydcd-entry"}, "content": body,
         "lang": "zh-Hant",
@@ -162,7 +155,6 @@ fn render(
 
 fn render_groups(
     displayed_word: &str,
-    display_traditional: bool,
     ordered: &[(&Group, &Vec<Collocate>)],
     forms: &HashSet<&str>,
     lexicon: &Lexicon,
@@ -174,11 +166,7 @@ fn render_groups(
             if !phrases.is_empty() {
                 phrases.push(json!("、"));
             }
-            let partner = if display_traditional {
-                lexicon.traditional(&collocate.partner)
-            } else {
-                collocate.partner.clone()
-            };
+            let partner = lexicon.traditional(&collocate.partner);
             let target = if forms.contains(partner.as_str()) {
                 partner.as_str()
             } else {
@@ -198,11 +186,6 @@ fn render_groups(
             label.to_owned()
         } else {
             format!("{label} · {}", group.sense)
-        };
-        let label = if display_traditional {
-            label
-        } else {
-            simplified_label(&label)
         };
         blocks.push(node(
             "div",
@@ -226,25 +209,6 @@ fn sense_order(sense: &str) -> u8 {
         "工作、操作" => 1,
         _ => 2,
     }
-}
-
-fn simplified_label(label: &str) -> String {
-    label
-        .chars()
-        .map(|ch| match ch {
-            '賓' => '宾',
-            '語' => '语',
-            '動' => '动',
-            '詞' => '词',
-            '謂' => '谓',
-            '飾' => '饰',
-            '計' => '计',
-            '補' => '补',
-            '課' => '课',
-            '業' => '业',
-            _ => ch,
-        })
-        .collect()
 }
 
 fn url_encode(word: &str) -> String {
